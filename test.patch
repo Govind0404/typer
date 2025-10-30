@@ -1,4 +1,7 @@
-﻿diff --git a/tests/test_discovery_auto.py b/tests/test_discovery_auto.py
+﻿diff --git a/test.sh b/test.sh
+old mode 100644
+new mode 100755
+diff --git a/tests/test_discovery_auto.py b/tests/test_discovery_auto.py
 index 2431835..0fc1528 100644
 --- a/tests/test_discovery_auto.py
 +++ b/tests/test_discovery_auto.py
