@@ -11,8 +11,8 @@ Manual glue in large Typer CLIs can miss modules, double‑register commands, an
 5) When an import fails, raise a discovery error whose message includes the fully qualified module path that triggered the failure.
 
 ## Test Assumptions
-- Public API: `typer.discovery.register_package(...) -> None` and `typer.discovery.TyperDiscoveryError`.
+- Public API surface: provide a discovery function and a dedicated exception type under `typer.discovery`.
 - Discovery targets module‑level Typer apps; packages exposing such apps become groups; command names and argument semantics remain as defined by Typer.
-- Filters restrict which modules are imported and registered; parents may be imported to attach children. Tests demonstrate both an unfiltered failure and a filtered success for the same package.
+- Filters restrict which modules are imported and registered; parents may be imported to attach children. Behavior includes both an unfiltered failure and a filtered success for the same package.
 - Collisions surface as errors unless namespaced; rerunning discovery is safe (no duplicates) and manual registrations remain intact.
-- Import‑failure messages must include the fully qualified (dotted) module path; exact wording is not enforced.
+- Import‑failure messages must include the fully qualified (dotted) module path; documentation intentionally avoids prescribing an exact string.
