@@ -11,7 +11,10 @@ Large Typer CLIs grow fragile as projects scale: manual wiring can miss modules,
 5) On import failure, raise a discovery error whose message includes the fully qualified module path that triggered the failure.
 
 ## Test Assumptions
-- Discovery targets only module‑scope Typer applications; packages exposing such apps become groups; underlying command names and arguments remain Typer‑defined.
-- Filters restrict which modules are imported and registered; parents may be imported to attach children. Tests demonstrate both an unfiltered failure and a filtered success over the same package.
+- Public API required:
+  - Function: `typer.discovery.register_package(app, package, namespace=None, filters=None) -> None`
+  - Exception: `typer.discovery.TyperDiscoveryError`
+- Discovery targets module‑scope Typer apps; packages exposing such apps become groups; underlying command names/arguments remain Typer‑defined.
+- Filters restrict which modules are imported and registered; parents may be imported to attach children. Tests show both an unfiltered failure and a filtered success over the same package.
 - Collisions with preexisting commands surface as errors; rerunning discovery is safe (no duplicates) and manual registrations remain intact.
-- Error messages for import failures include the dotted (fully qualified) module path.
+- Import‑failure messages must include the fully qualified (dotted) module path; exact wording is not enforced.

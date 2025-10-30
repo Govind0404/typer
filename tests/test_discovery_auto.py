@@ -77,7 +77,8 @@ def test_register_package_surfaces_import_failures_with_module_name() -> None:
         register_package(app, package)
 
     message = str(excinfo.value)
-    assert message == f"Failed to import module '{FAILING_MODULE}'"
+    # Loosen to behavior: message must include the fully qualified module path.
+    assert FAILING_MODULE in message
 
 
 def test_register_package_is_idempotent() -> None:
@@ -141,7 +142,8 @@ def test_register_package_filters_can_skip_failing_modules() -> None:
     with pytest.raises(TyperDiscoveryError) as excinfo:
         register_package(unfiltered_app, package)
 
-    assert str(excinfo.value) == f"Failed to import module '{FAILING_MODULE}'"
+    # Behavior-focused check: only require the dotted module path to appear.
+    assert FAILING_MODULE in str(excinfo.value)
 
     filtered_app = typer.Typer()
     register_package(filtered_app, package, filters=["users", "inventory.*"])
